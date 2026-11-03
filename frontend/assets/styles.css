@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ======================================================== */
+/* Theme Definitions: Dark (Default), Semi-Dark, Light       */
+/* ======================================================== */
+
+/* 1. Dark Theme (Deep Obsidian / Neon Glow) */
+:root, body.theme-dark, .stApp.theme-dark, .theme-dark {
+    --bg-main: #0B0F19;
+    --bg-gradient: radial-gradient(circle at top left, #1a1c2c 0%, #0B0F19 45%, #0B0F19 100%);
+    --bg-card: rgba(20, 26, 40, 0.8);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
+    --input-bg: #151D2E;
+    --input-text: #FFFFFF;
+    --sidebar-bg: #0D121F;
+    --uploader-bg: rgba(21, 29, 46, 0.6);
+    --file-data-bg: #1A2337;
+    --accent-blue: #3B82F6;
+    --accent-purple: #8B5CF6;
+    --accent-glow: rgba(139, 92, 246, 0.3);
+    --heading-gradient: linear-gradient(135deg, #60A5FA 0%, #C084FC 100%);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* 2. Semi-Dark Theme (Slate Navy / Twilight) */
+body.theme-semi, .stApp.theme-semi, .theme-semi {
+    --bg-main: #1E293B;
+    --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #273549 100%);
+    --bg-card: rgba(30, 41, 59, 0.9);
+    --border-glass: rgba(148, 163, 184, 0.25);
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --input-bg: #0F172A;
+    --input-text: #F8FAFC;
+    --sidebar-bg: #0F172A;
+    --uploader-bg: rgba(15, 23, 42, 0.7);
+    --file-data-bg: #334155;
+    --accent-blue: #0284C7;
+    --accent-purple: #6366F1;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --heading-gradient: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
+    --card-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* 3. Light Theme (Executive Pearl / Crisp Snow) */
+body.theme-light, .stApp.theme-light, .theme-light {
+    --bg-main: #F8FAFC;
+    --bg-gradient: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 50%, #E2E8F0 100%);
+    --bg-card: #FFFFFF;
+    --border-glass: #CBD5E1;
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --input-bg: #FFFFFF;
+    --input-text: #0F172A;
+    --sidebar-bg: #F1F5F9;
+    --uploader-bg: #F8FAFC;
+    --file-data-bg: #E2E8F0;
+    --accent-blue: #2563EB;
+    --accent-purple: #7C3AED;
+    --accent-glow: rgba(37, 99, 235, 0.2);
+    --heading-gradient: linear-gradient(135deg, #1D4ED8 0%, #6D28D9 100%);
+    --card-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* ======================================================== */
+/* Base Global Styles & Overrides                           */
+/* ======================================================== */
+html, body {
+    font-family: 'Outfit', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+}
+
+[class*="st-"] {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Preserve Streamlit icon fonts and prevent text ligatures from rendering as plain text across all browsers */
+[data-testid*="Icon"], 
+[class*="material-symbols"], 
+[class*="material-icons"],
+.material-symbols-rounded, 
+.material-symbols-outlined,
+[data-testid="stExpanderToggleIcon"] * {
+    font-family: 'Material Symbols Rounded', 'Material Icons', sans-serif !important;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+}
+
+.stApp {
+    background: var(--bg-gradient) !important;
+    color: var(--text-primary) !important;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ELIMINATE STREAMLIT WHITE HEADER BAR */
+header[data-testid="stHeader"], 
+.stAppHeader, 
+[data-testid="stToolbar"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Sidebar Override */
+section[data-testid="stSidebar"] {
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--border-glass) !important;
+    backdrop-filter: blur(20px) !important;
+    color: var(--text-primary) !important;
+}
+section[data-testid="stSidebar"] * {
+    color: var(--text-primary) !important;
+}
+
+/* Glassmorphism Cards */
+.card {
+    background: var(--bg-card) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-glass) !important;
+    box-shadow: var(--card-shadow) !important;
+    color: var(--text-primary) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px 0 rgba(0, 0, 0, 0.25), 0 0 15px var(--accent-glow) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    background: var(--heading-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 5px;
+}
+
+p, span, div, label {
+    color: var(--text-primary);
+}
+
+label[data-testid="stWidgetLabel"] p, 
+label[data-testid="stWidgetLabel"] {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* ======================================================== */
+/* Inputs, Textareas, and Dropdowns                         */
+/* ======================================================== */
+div[data-baseweb="textarea"], 
+div[data-baseweb="textarea"] textarea,
+div[data-baseweb="base-input"],
+div[data-baseweb="input"],
+div[data-baseweb="input"] input {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border-color: var(--border-glass) !important;
+    -webkit-text-fill-color: var(--input-text) !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease;
+}
+
+div[data-baseweb="textarea"]:focus-within,
+div[data-baseweb="input"]:focus-within {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 2px var(--accent-glow) !important;
+}
+
+div[data-baseweb="textarea"] textarea::placeholder,
+div[data-baseweb="input"] input::placeholder {
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* ======================================================== */
+/* File Uploader - Fully Fixed, NO White Artifacts          */
+/* ======================================================== */
+[data-testid="stFileUploader"] {
+    background: var(--uploader-bg) !important;
+    border: 1px dashed var(--border-glass) !important;
+    border-radius: 14px;
+    padding: 12px;
+    transition: all 0.3s;
+}
+
+[data-testid="stFileUploader"]:hover {
+    border-color: var(--accent-blue) !important;
+}
+
+[data-testid="stFileUploaderDropzone"] {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* Uploaded file pill / card inside uploader */
+[data-testid="stFileUploaderFileData"] {
+    background: var(--file-data-bg) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-glass) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-testid="stFileUploaderFileData"] * {
+    color: var(--text-primary) !important;
+}
+
+[data-testid="stFileUploaderFileData"] svg {
+    fill: var(--text-primary) !important;
+}
+
+[data-testid="stFileUploaderDeleteBtn"] button {
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    border: none !important;
+}
+
+[data-testid="stFileUploaderDeleteBtn"] button:hover {
+    color: #EF4444 !important;
+}
+
+/* ======================================================== */
+/* Buttons                                                  */
+/* ======================================================== */
+.stButton > button {
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 14px var(--accent-glow) !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 8px 25px var(--accent-glow) !important;
+    filter: brightness(1.1);
+}
+
+.stButton > button:active {
+    transform: translateY(1px);
+}
+
+/* Metrics and Progress */
+[data-testid="stMetricValue"] {
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    color: var(--text-primary) !important;
+}
+[data-testid="stMetricLabel"] {
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+.stProgress > div > div > div {
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)) !important;
+    border-radius: 10px;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: transparent !important;
+    border-bottom: 2px solid var(--border-glass) !important;
+    gap: 1.5rem;
+}
+.stTabs [data-baseweb="tab"] {
+    color: var(--text-muted) !important;
+    font-weight: 600 !important;
+    padding-bottom: 0.8rem;
+}
+.stTabs [aria-selected="true"] {
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--accent-purple) !important;
+}
+
+/* Alerts / Banners */
+[data-testid="stAlert"] {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-glass) !important;
+    border-radius: 12px;
+    color: var(--text-primary) !important;
+}
+[data-testid="stAlert"] * {
+    color: var(--text-primary) !important;
+}
+
+/* Divider */
+hr {
+    border-color: var(--border-glass) !important;
+}
+
+/* ======================================================== */
+/* Responsive & Adaptive Mobile Design                      */
+/* ======================================================== */
+@media (max-width: 768px) {
+    .card {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    [data-testid="stMetricValue"] {
+        font-size: 1.8rem !important;
+    }
+    
+    h1 {
+        font-size: 2rem !important;
+    }
+    
+    .stButton > button {
+        width: 100% !important;
+        padding: 0.85rem !important;
+    }
+    
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0.8rem;
+        overflow-x: auto;
+    }
+}
+
+/* ======================================================== */
+/* Footer & Social Badges                                   */
+/* ======================================================== */
+.social-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 18px 0;
+}
+
+.social-link-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 24px;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-glass) !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.social-link-badge:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 6px 18px var(--accent-glow) !important;
+    color: #FFFFFF !important;
+    filter: brightness(1.15);
+}
+
+.footer-container {
+    text-align: center;
+    padding: 30px 10px 20px 10px;
+    margin-top: 30px;
+    border-top: 1px solid var(--border-glass);
+    color: var(--text-secondary);
+}
+

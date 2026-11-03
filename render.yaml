@@ -1,0 +1,32 @@
+services:
+  # Backend API
+  - type: web
+    name: adhii-ats-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: qwen/qwen3.8-27b
+
+  # Frontend Streamlit App
+  - type: web
+    name: adhii-ats-frontend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run frontend/streamlit_app.py --server.port $PORT"
+    plan: starter
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: adhii-ats-backend
+          envVarKey: RENDER_EXTERNAL_URL
